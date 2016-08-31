@@ -1,0 +1,32 @@
+server:  
+  port: 8888
+spring:
+  application: 
+    name: CONFIG_SERVER #同时也是eureka上的APPID
+  cloud: 
+    config:
+      server:
+        git: #默认 http://localhost:8888/config/1/master/tosca_openwrt_vnfd.yaml
+          #uri: https://github.com/shenlee/mano-tosca
+          uri: C:\\Users\\admin\\Desktop\\xinWork\\helloworld
+          searchPaths: conf,nsd,vnfd #子目录的配置必须在此默认位置
+          repos:
+            dev: #开发环境 localhost:8888/config/dev/master/tosca_openwrt_vnfd.yaml
+               uri: https://github.com/shenlee/mano-tosca
+            test:   #测试环境 localhost:8888/config/test/master/tosca_openwrt_vnfd.yaml
+               uri: https://github.com/shenlee/mano-tosca #此处填写另外一个git repo
+            local:  #本地git repo
+               uri: file:/home/configsvc/config-repo
+      #discovery: 
+          #enabled: true
+          #serviceId: MANO-CONFIG-SERVICE
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /info
+    preferIpAddress: true
